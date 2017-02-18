@@ -25,5 +25,8 @@ module Workspace
     
     config.paths.add File.join('app', 'api'), glob: File.join('**', '*.rb')
     config.autoload_paths += Dir[Rails.root.join('app', 'api', '*')]
+    
+    config.paths.add File.join('app', 'bot'), glob: File.join('**', '*.rb')
+config.autoload_paths += Dir[Rails.root.join('app', 'bot', '*')]
   end
 end
