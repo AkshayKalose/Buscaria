@@ -28,14 +28,15 @@ ActiveRecord::Schema.define(version: 20170218222216) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.integer  "id_fb"
+    t.integer  "id_fb",      limit: 8,             null: false
     t.string   "name_first"
     t.string   "name_last"
     t.string   "email"
+    t.integer  "points",               default: 0, null: false
     t.float    "latitude"
     t.float    "longitude"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "users", ["id_fb"], name: "index_users_on_id_fb", unique: true
