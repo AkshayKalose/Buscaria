@@ -3,6 +3,10 @@ include Facebook::Messenger
 Bot.on :message do |message|
   puts "Received '#{message.inspect}' from #{message.sender}"
 
+  # case message.sender
+    # check if in database
+  # end
+
   case message.text
   when /help/i
     message.reply(
@@ -72,9 +76,9 @@ end
 Bot.on :postback do |postback|
   case postback.payload
   when 'LANGUAGE_LEARN'
-    text = 'That makes bot happy!'
+    text = 'What language would you like to learn? Type \'\\learn \', then the name of the language'
   when 'LANGUAGE_TEACH'
-    text = 'Oh.'
+    text = 'What language would you like to teach? Type \'\\teach \', then the name of the language'
   end
 
   postback.reply(
