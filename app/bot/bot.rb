@@ -6,36 +6,58 @@ Bot.on :message do |message|
   case message.text
   when /help/i
     message.reply(
-      text: 'Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them.
-      		What language(s) would you like to learn? Type "\learn ", then the name of the language you wish to learn or practice'
-    )
-  when /something humans like/i
-    message.reply(
-      text: 'I found something humans seem to like:'
-    )
-
-    message.reply(
-      attachment: {
-        type: 'image',
-        payload: {
-          url: 'https://i.imgur.com/iMKrDQc.gif'
-        }
-      }
-    )
-
-    message.reply(
-      attachment: {
+	  attachment: {
         type: 'template',
         payload: {
           template_type: 'button',
-          text: 'Did human like it?',
+          text: 'Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them. Would you like to learn or teach?',
           buttons: [
-            { type: 'postback', title: 'Yes', payload: 'HUMAN_LIKED' },
-            { type: 'postback', title: 'No', payload: 'HUMAN_DISLIKED' }
+            { type: 'postback', title: 'Learn!', payload: 'LANGUAGE_LEARN' },
+            { type: 'postback', title: 'Teach!', payload: 'LANGUAGE_TEACH' }
           ]
         }
       }
     )
+  when /\/practice ([a-zA-Z]*) (\d*)/i
+
+  	var1 = $LAST_MATCH_INFO[1]
+
+     # Check if anyone can help in database
+
+     # if
+
+    message.reply(
+      text: 'Great! Let\'s get started with ' + $1 + ' at level ' + $2
+    )
+
+     # else
+
+    message.reply(
+      text: 'Sorry, there is no one available to teach you ' + $1 + 'at level ' + $2
+	)
+
+    # message.reply(
+    #   attachment: {
+    #     type: 'image',
+    #     payload: {
+    #       url: 'https://i.imgur.com/iMKrDQc.gif'
+    #     }
+    #   }
+    # )
+
+    # message.reply(
+    #   attachment: {
+    #     type: 'template',
+    #     payload: {
+    #       template_type: 'button',
+    #       text: 'Did human like it?',
+    #       buttons: [
+    #         { type: 'postback', title: 'Yes', payload: 'HUMAN_LIKED' },
+    #         { type: 'postback', title: 'No', payload: 'HUMAN_DISLIKED' }
+    #       ]
+    #     }
+    #   }
+    # )
   else
     message.reply(
       text: 'You are now marked for extermination.'
@@ -49,9 +71,9 @@ end
 
 Bot.on :postback do |postback|
   case postback.payload
-  when 'HUMAN_LIKED'
+  when 'LANGUAGE_LEARN'
     text = 'That makes bot happy!'
-  when 'HUMAN_DISLIKED'
+  when 'LANGUAGE_TEACH'
     text = 'Oh.'
   end
 
