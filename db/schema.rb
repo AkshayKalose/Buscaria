@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170218222216) do
+ActiveRecord::Schema.define(version: 20170218233303) do
 
   create_table "languages", force: :cascade do |t|
     t.string   "name"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20170218222216) do
     t.float    "longitude"
     t.datetime "created_at",                       null: false
     t.datetime "updated_at",                       null: false
+    t.integer  "talking_to"
   end
 
   add_index "users", ["id_fb"], name: "index_users_on_id_fb", unique: true
