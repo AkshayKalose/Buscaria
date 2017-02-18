@@ -4,16 +4,10 @@ Bot.on :message do |message|
   puts "Received '#{message.inspect}' from #{message.sender}"
 
   case message.text
-  when /hello/i
+  when /help/i
     message.reply(
-      text: 'Hello, human!',
-      quick_replies: [
-        {
-          content_type: 'text',
-          title: 'Hello, bot!',
-          payload: 'HELLO_BOT'
-        }
-      ]
+      text: 'Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them.
+      		What language(s) would you like to learn? Type "\learn ", then the name of the language you wish to learn or practice'
     )
   when /something humans like/i
     message.reply(
