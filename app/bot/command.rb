@@ -26,7 +26,7 @@ class Command
     clean_msg = msg.strip.downcase
     self.descendants.each do |d|
       if d.string === clean_msg
-        return d.execute("")
+        return d.execute("", user)
       else
         str_rgx = "^" + d.string + " +(.*)"
         reg = Regexp.new(str_rgx)
