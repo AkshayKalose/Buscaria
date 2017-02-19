@@ -87,7 +87,7 @@ class List < Command
     msg = "The languages you can learn are: "
     langs = Language.select(:name)
     langs.each do |l|
-      msg += l.name + ", "
+      msg += l.name.capitalize + ", "
     end
     msg = msg.chomp(", ") + "."
     Reply.new(true, text: msg)
