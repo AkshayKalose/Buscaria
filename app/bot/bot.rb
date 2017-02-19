@@ -72,7 +72,7 @@ Bot.on :postback do |postback|
                     id: user.id_fb
                   },
                   message: {
-                    text: "Congratulations, you recieved #{$1} karma points! You now have #{user.points} karma points."
+                    text: "Congratulations, you recieved #{$1} karma points! You now have #{user.points + 10} karma points."
                   }
                 }, access_token: ENV['ACCESS_TOKEN'])
   else
