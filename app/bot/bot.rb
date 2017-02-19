@@ -33,7 +33,7 @@ Bot.on :message do |message|
     rep = Command.execute(message.text, user, :main)
     message.reply(rep.msg)
   else
-    rep = Command.execute(message,text, user, :route)
+    rep = Command.execute(message.text, user, :route)
     if rep.success
       message.reply(rep.msg)
     else

@@ -80,7 +80,7 @@ class Learn < Command
           return Reply.new(false, text: "Alas, Buscaria cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\"")
         end
 
-        users = User.joins(:teachables).where(teachables: {language: lang, level: [level..5]})
+        users = User.joins(:teachables).where(teachables: {language: lang, level: [level..5]}).where.not(users: { id: user.id })
 
         if users.size == 0
           return Reply.new(false, text: "Alas, Buscaria cannot find anyone who speaks the language at the higher proficiency than you. Try again later.")
@@ -191,6 +191,8 @@ class Exit < Command
   end
 
   def self.execute(args, user)
+
+    puts "?????????"
     
     user2 = User.find(user.talking_to)
     user.talking_to = nil
