@@ -2,18 +2,9 @@ include Facebook::Messenger
 
 def find_user(fb_id)
   if !User.exists?(id_fb: fb_id)
-    # Create new user
     user = User.create(id_fb: fb_id)
-    #    message.reply(
-    #    	text: 'New user created!'
-    # )
-    # user.name_first = 'Vishnu'
-    # user.save
   else
     user = User.where(id_fb: fb_id).first()
-    #  	message.reply(
-    #    	text: 'User already in database!'
-    # )
   end
   return user
 end

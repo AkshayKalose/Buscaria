@@ -92,10 +92,20 @@ class Learn < Command
 
         lang = Language.where(name:m[1]).first
         if lang == nil
+<<<<<<< HEAD
           return Reply.new(false, text: "Alas, Buscaría cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\"")
+=======
+          return Reply.new(false, text: "Alas, Buscaria cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\").")
+>>>>>>> d88eb29a30df7b1300e2a8adc34ce11bda0353b1
         end
 
-        users = User.joins(:teachables).where(teachables: {language: lang, level: [level..5]}).where.not(users: { id: user.id })
+        users = User.joins(:teachables)
+          .where(teachables: {
+                   language: lang,
+                   level: [level..5]
+                 })
+          .where.not(users: { id: user.id })
+          .order("teachables.level DESC")
 
         if users.size == 0
           return Reply.new(false, text: "Alas, Buscaría cannot find anyone who speaks the language at the higher proficiency than you. Try again later.")
@@ -128,7 +138,7 @@ class Learn < Command
         return Reply.new(true, text: "You are now connected with someone who is ready to teach #{m[1].capitalize}. Your messages will now be routed to them. Text /exit at any time to exit.")
       end
     else
-      return Reply.new(false, text: "I cannot understand. The syntax for the \"learn\" command is \"learn <language> <your proficiency from 1 to 5>\". E.g. \"learn Spanish 2\"");
+      return Reply.new(false, text: "I cannot understand. The syntax for the \"learn\" command is \"learn <language> <your proficiency from 1 to 5>\". E.g. \"learn Spanish 2\".");
     end
   end
 
@@ -155,7 +165,8 @@ class Learn < Command
             lang = Language.create(name:m[1])
           end
 
-          teach = Teachable.where(user: user).first
+          teach = Teachable.where(user: user,
+                                  language: lang).first
           if (teach == nil)
             teach = Teachable.create(user: user,
                                      language: lang,
@@ -206,8 +217,6 @@ class Exit < Command
   end
 
   def self.execute(args, user)
-
-    puts "?????????"
     
     user2 = User.find(user.talking_to)
     user.talking_to = nil
