@@ -29,11 +29,13 @@ Bot.on :message do |message|
 
   # FIRST CHECK IF WE ARE ROUTING. HANDLE IF NOT ROUTING
 
+  msg_text = message.text == nil ? "" : message.text
+
   if user.talking_to == nil || user.talking_to == 0
-    rep = Command.execute(message.text, user, :main)
+    rep = Command.execute(msg_text, user, :main)
     message.reply(rep.msg)
   else
-    rep = Command.execute(message.text, user, :route)
+    rep = Command.execute(msg_text, user, :route)
     if rep.success
       message.reply(rep.msg)
     else
@@ -47,7 +49,7 @@ Bot.on :message do |message|
                         id: user2.id_fb
                       },
                       message: {
-		  	text: message.text
+		  	text: msg_text
                       }
                     }, access_token: ENV['ACCESS_TOKEN'])
       else
