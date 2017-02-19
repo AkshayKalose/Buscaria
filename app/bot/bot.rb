@@ -26,7 +26,7 @@ Bot.on :message do |message|
 
   if user.talking_to == nil || user.talking_to == 0
     rep = Command.execute(message.text, user).msg
-    message.reply(msg)
+    message.reply(rep)
   else
   	# Route!!
   	# message.sender_id
