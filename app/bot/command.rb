@@ -43,6 +43,21 @@ class Command
   
 end
 
+class Karma < Command
+
+  def self.modes
+    [:main]
+  end
+
+  def self.string
+    "karma"
+  end
+
+  def self.execute(args, user)
+    Reply.new(true, text: "You have #{user.points} karma points.")
+  end
+end
+
 class Help < Command
 
   def self.modes
@@ -54,7 +69,7 @@ class Help < Command
   end
 
   def self.execute(args, user)
-    Reply.new(true, text: "Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them. If you would like to learn, text \"learn <language> <proficiency>\", where proficiency is a value from 1 to 5, 1 meaning you know nothing and 5 meaning you're a native speaker. Busscaria will automatically connect you with someone who is willing to teach. If you would like to teach, text \"teach <language> <proficiency>\", and Buscaria will contact you when someone asks to learn. Type \"help\" to see this message again. Have fun!")
+    Reply.new(true, text: "Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them. If you would like to learn, text \"learn <language> <proficiency>\", where proficiency is a value from 1 to 5, 1 meaning you know nothing and 5 meaning you're a native speaker. Busscaria will automatically connect you with someone who is willing to teach. If you would like to teach, text \"teach <language> <proficiency>\", and Buscaria will contact you when someone asks to learn. Type \"help\" to see this message again. Type \"karma\" to list your karma points. Have fun!")
   end
 end
 
@@ -110,7 +125,7 @@ class Learn < Command
         user.save
         user2.save
         
-        return Reply.new(true, text: "You are now connected with someone who is ready to teach #{m[1].capitalize}. Your messages will now be routed to the. Text /exit at any time to exit.")
+        return Reply.new(true, text: "You are now connected with someone who is ready to teach #{m[1].capitalize}. Your messages will now be routed to them. Text /exit at any time to exit.")
       end
     else
       return Reply.new(false, text: "I cannot understand. The syntax for the \"learn\" command is \"learn <language> <your proficiency from 1 to 5>\". E.g. \"learn Spanish 2\"");
