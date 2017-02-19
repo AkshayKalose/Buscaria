@@ -69,7 +69,7 @@ class Help < Command
   end
 
   def self.execute(args, user)
-    Reply.new(true, text: "Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them. If you would like to learn, text \"learn <language> <proficiency>\", where proficiency is a value from 1 to 5, 1 meaning you know nothing and 5 meaning you're a native speaker. Busscaria will automatically connect you with someone who is willing to teach. If you would like to teach, text \"teach <language> <proficiency>\", and Buscaria will contact you when someone asks to learn. Type \"help\" to see this message again. Type \"karma\" to list your karma points. Have fun!")
+    Reply.new(true, text: "Welcome to Buscaría! We connect people who want to learn a new language to real people who want to help them. If you would like to learn, text \"learn <language> <proficiency>\", where proficiency is a value from 1 (know nothing) to 5 (native speaker). Buscaría will connect you with someone who is willing to teach. If you would like to teach, text \"teach <language> <proficiency>\", and Buscaría will contact you when someone asks to learn. Type \"help\" to see this message again. Type \"karma\" to list your karma points. Have fun!")
   end
 end
 
@@ -92,19 +92,19 @@ class Learn < Command
 
         lang = Language.where(name:m[1]).first
         if lang == nil
-          return Reply.new(false, text: "Alas, Buscaria cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\"")
+          return Reply.new(false, text: "Alas, Buscaría cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\"")
         end
 
         users = User.joins(:teachables).where(teachables: {language: lang, level: [level..5]}).where.not(users: { id: user.id })
 
         if users.size == 0
-          return Reply.new(false, text: "Alas, Buscaria cannot find anyone who speaks the language at the higher proficiency than you. Try again later.")
+          return Reply.new(false, text: "Alas, Buscaría cannot find anyone who speaks the language at the higher proficiency than you. Try again later.")
         end
 
         user2 = users.where(talking_to: nil).first
 
         if user2 == nil
-          return Reply.new(false, text: "Buscaria has found people who are willing to teach you this language, but all are conversing with other people at the moment. Try again later.")
+          return Reply.new(false, text: "Buscaría has found people who are willing to teach you this language, but all are conversing with other people at the moment. Try again later.")
         end
 
         user.talking_to = user2.id
