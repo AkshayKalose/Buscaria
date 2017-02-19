@@ -54,7 +54,7 @@ class Karma < Command
   end
 
   def self.execute(args, user)
-    Reply.new(true, text: "You have #{user.points} karma points.")
+    Reply.new(true, text: "You have #{user.points + 10} karma points.")
   end
 end
 
@@ -111,6 +111,10 @@ class Learn < Command
         return Reply.new(false, text: "Your proficiency must be an integer number from 1 to 5, where 1 means you know nothing and 5 means you are a native speaker.")
       else
 
+        if user.points < -10
+          return Reply.new(false, text: "You've reached #{user.points + 10} karma points. You cannot request to learn until you've reached at least 0 karma points by teaching others.")
+        end
+
         lang = Language.where(name:m[1]).first
         if lang == nil
           return Reply.new(false, text: "Alas, Buscaría cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\"")
@@ -149,6 +153,7 @@ class Learn < Command
                     }, access_token: ENV['ACCESS_TOKEN'])
         puts msg_text
 
+        user.points -= 2
         user.save
         user2.save
         
