@@ -161,7 +161,8 @@ class Learn < Command
             lang = Language.create(name:m[1])
           end
 
-          teach = Teachable.where(user: user).first
+          teach = Teachable.where(user: user,
+                                  language: lang).first
           if (teach == nil)
             teach = Teachable.create(user: user,
                                      language: lang,
