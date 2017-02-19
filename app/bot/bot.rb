@@ -1,7 +1,7 @@
 include Facebook::Messenger
 
 def find_user(fb_id)
-    if !User.exists?(id_fb: fb_id)
+  if !User.exists?(id_fb: fb_id)
     # Create new user
     user = User.create(id_fb: fb_id)
     #    message.reply(
@@ -15,6 +15,7 @@ def find_user(fb_id)
     #    	text: 'User already in database!'
     # )
   end
+  return user
 end
 
 Bot.on :message do |message|

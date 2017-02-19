@@ -26,8 +26,8 @@ class Command
     clean_msg = msg.strip.downcase
     self.descendants.each do |d|
       if d.modes.include? mode
-        s = "/" + d.string
-        if s === clean_msg
+        s = (mode == :route) ? "/" + d.string : d.string
+        if s == clean_msg
           return d.execute("", user)
         else
           str_rgx = "^" + s + " +(.*)"
@@ -164,47 +164,47 @@ end
 
 class Exit < Command
   
-    def self.modes
-      [:route]
-    end
+  def self.modes
+    [:route]
+  end
 
-    def self.string
-      "exit"
-    end
+  def self.string
+    "exit"
+  end
 
-    def gen_rating(user)
-      reply = {
-        attachment:{
-          type: 'template',
-          payload: {
-            template_type: 'button',
-            text: 'Your session has ended. How many karma points do you want to give your parter?',
-            buttons: [
-                      { type: 'postback', title: '1', payload: 'RATE_1_' + String(user.id)},
-                      { type: 'postback', title: '2', payload: 'RATE_2_' + String(user.id)},
-                      { type: 'postback', title: '3', payload: 'RATE_3_' + String(user.id)}
-                     ]
-          }
+  def gen_rating(user)
+    reply = {
+      attachment:{
+        type: 'template',
+        payload: {
+          template_type: 'button',
+          text: 'Your session has ended. How many karma points do you want to give your parter?',
+          buttons: [
+                    { type: 'postback', title: '1', payload: 'RATE_1_' + String(user.id)},
+                    { type: 'postback', title: '2', payload: 'RATE_2_' + String(user.id)},
+                    { type: 'postback', title: '3', payload: 'RATE_3_' + String(user.id)}
+                   ]
         }
       }
-      return reply
-    end
+    }
+    return reply
+  end
 
-    def self.execute(args, user)
-      
-      user2 = User.find(user.talking_to)
-      user.talking_to = nil
-      user2.talking_to = nil
-      user.save
-      user2.save
-      
-      Bot.deliver({
-                    recipient: {
-                      id: user2.id_fb
-                    },
-                    message: gen_rating(user),
-                  }, access_token: ENV['ACCESS_TOKEN'])
-      return Reply.new(true, gen_rating(user2))
-    end
+  def self.execute(args, user)
+    
+    user2 = User.find(user.talking_to)
+    user.talking_to = nil
+    user2.talking_to = nil
+    user.save
+    user2.save
+    
+    Bot.deliver({
+                  recipient: {
+                    id: user2.id_fb
+                  },
+                  message: gen_rating(user),
+                }, access_token: ENV['ACCESS_TOKEN'])
+    return Reply.new(true, gen_rating(user2))
+  end
 
 end
