@@ -78,7 +78,7 @@ Bot.on :postback do |postback|
     user.save
     Bot.deliver({
                   recipient: {
-                    id: user2.id_fb
+                    id: user.id_fb
                   },
                   message: {
                     text: "Congratulations, you recieved #{$1} karma points! You now have #{user.points} karma points."
