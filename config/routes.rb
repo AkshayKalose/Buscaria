@@ -54,6 +54,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
   
-  mount API => '/api'
   get '/' => 'pages#show'
+  mount Facebook::Messenger::Server, at: 'bot'
 end
