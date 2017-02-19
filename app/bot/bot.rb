@@ -92,11 +92,11 @@ Bot.on :message do |message|
   				template_type: 'button',
   				text: 'Your session has ended. How many karma points do you want to give your parter?',
   				button: [
-  					{ type: 'postback', title: '1', payload: 'RATE_1_' + user2.id},
-  					{ type: 'postback', title: '2', payload: 'RATE_2_' + user2.id},
-  					{ type: 'postback', title: '3', payload: 'RATE_3_' + user2.id},
-  					{ type: 'postback', title: '4', payload: 'RATE_4_' + user2.id},
-  					{ type: 'postback', title: '5', payload: 'RATE_5_' + user2.id}
+  					{ type: 'postback', title: '1', payload: 'RATE_1_' + String(user2.id)},
+  					{ type: 'postback', title: '2', payload: 'RATE_2_' + String(user2.id)},
+  					{ type: 'postback', title: '3', payload: 'RATE_3_' + String(user2.id)},
+  					{ type: 'postback', title: '4', payload: 'RATE_4_' + String(user2.id)},
+  					{ type: 'postback', title: '5', payload: 'RATE_5_' + String(user2.id)}
   				]
   			}
   		}
