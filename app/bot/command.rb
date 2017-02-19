@@ -69,7 +69,7 @@ class Help < Command
   end
 
   def self.execute(args, user)
-    Reply.new(true, text: "Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them. If you would like to learn, text \"learn <language> <proficiency>\", where proficiency is a value from 1 to 5, 1 meaning you know nothing and 5 meaning you're a native speaker. Busscaria will automatically connect you with someone who is willing to teach. If you would like to teach, text \"teach <language> <proficiency>\", and Buscaria will contact you when someone asks to learn. Type \"help\" to see this message again. Type \"karma\" to list your karma points. Have fun!")
+    Reply.new(true, text: "Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them. If you would like to learn, text \"learn <language> <proficiency>\", where proficiency is a value from 1 to 5. 1 means you know nothing and 5 means you're a native speaker. Buscaria will automatically connect you with someone who is willing to teach. If you would like to teach, text \"teach <language> <proficiency>\", and Buscaria will contact you when someone asks to learn. Type \"help\" to see this message again. Type \"karma\" to list your karma points. Have fun!")
   end
 end
 
@@ -92,10 +92,16 @@ class Learn < Command
 
         lang = Language.where(name:m[1]).first
         if lang == nil
-          return Reply.new(false, text: "Alas, Buscaria cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\"")
+          return Reply.new(false, text: "Alas, Buscaria cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\").")
         end
 
-        users = User.joins(:teachables).where(teachables: {language: lang, level: [level..5]}).where.not(users: { id: user.id })
+        users = User.joins(:teachables)
+          .where(teachables: {
+                   language: lang,
+                   level: [level..5]
+                 })
+          .where.not(users: { id: user.id })
+          .order("teachables.level DESC")
 
         if users.size == 0
           return Reply.new(false, text: "Alas, Buscaria cannot find anyone who speaks the language at the higher proficiency than you. Try again later.")
@@ -128,7 +134,7 @@ class Learn < Command
         return Reply.new(true, text: "You are now connected with someone who is ready to teach #{m[1].capitalize}. Your messages will now be routed to them. Text /exit at any time to exit.")
       end
     else
-      return Reply.new(false, text: "I cannot understand. The syntax for the \"learn\" command is \"learn <language> <your proficiency from 1 to 5>\". E.g. \"learn Spanish 2\"");
+      return Reply.new(false, text: "I cannot understand. The syntax for the \"learn\" command is \"learn <language> <your proficiency from 1 to 5>\". E.g. \"learn Spanish 2\".");
     end
   end
 
@@ -206,8 +212,6 @@ class Exit < Command
   end
 
   def self.execute(args, user)
-
-    puts "?????????"
     
     user2 = User.find(user.talking_to)
     user.talking_to = nil
