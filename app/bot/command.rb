@@ -22,16 +22,19 @@ class Command
     descendants << descendant
   end
   
-  def self.execute(msg, user)
+  def self.execute(msg, user, mode)
     clean_msg = msg.strip.downcase
     self.descendants.each do |d|
-      if d.string === clean_msg
-        return d.execute("", user)
-      else
-        str_rgx = "^" + d.string + " +(.*)"
-        reg = Regexp.new(str_rgx)
-        if m = reg.match(clean_msg)
-          return d.execute(m[1], user)
+      if d.modes.include? mode
+        s = "/" + d.string
+        if s === clean_msg
+          return d.execute("", user)
+        else
+          str_rgx = "^" + s + " +(.*)"
+          reg = Regexp.new(str_rgx)
+          if m = reg.match(clean_msg)
+            return d.execute(m[1], user)
+          end
         end
       end
     end
@@ -41,6 +44,10 @@ class Command
 end
 
 class Help < Command
+
+  def self.modes
+    [:main]
+  end
 
   def self.string
     "help"
@@ -52,6 +59,10 @@ class Help < Command
 end
 
 class Learn < Command
+
+  def self.modes
+    [:main]
+  end
 
   def self.string
     "learn"
@@ -84,7 +95,7 @@ class Learn < Command
         user.talking_to = user2.id
         user2.talking_to = user.id
 
-        msg_text = "Hello, you are now connected with someone who is ready to learn #{m[1].capitalize}. Their proficiency in this language is #{m[2]}. Your messages will now be routed to the. Text /exit at any time to exit."
+        msg_text = "Hello, you are now connected with someone who is ready to learn #{m[1].capitalize}. Their proficiency in this language is #{m[2]}. Your messages will now be routed to them. Text /exit at any time to exit."
         
         Bot.deliver({
                       recipient: {
@@ -108,6 +119,10 @@ class Learn < Command
 
 
   class Teach < Command
+
+    def self.modes
+      [:main]
+    end
 
     def self.string
       "teach"
@@ -145,4 +160,51 @@ class Learn < Command
 
   end
   
+end
+
+class Exit < Command
+  
+    def self.modes
+      [:route]
+    end
+
+    def self.string
+      "exit"
+    end
+
+    def gen_rating(user)
+      reply = {
+        attachment:{
+          type: 'template',
+          payload: {
+            template_type: 'button',
+            text: 'Your session has ended. How many karma points do you want to give your parter?',
+            buttons: [
+                      { type: 'postback', title: '1', payload: 'RATE_1_' + String(user.id)},
+                      { type: 'postback', title: '2', payload: 'RATE_2_' + String(user.id)},
+                      { type: 'postback', title: '3', payload: 'RATE_3_' + String(user.id)}
+                     ]
+          }
+        }
+      }
+      return reply
+    end
+
+    def self.execute(args, user)
+      
+      user2 = User.find(user.talking_to)
+      user.talking_to = nil
+      user2.talking_to = nil
+      user.save
+      user2.save
+      
+      Bot.deliver({
+                    recipient: {
+                      id: user2.id_fb
+                    },
+                    message: gen_rating(user),
+                  }, access_token: ENV['ACCESS_TOKEN'])
+      return Reply.new(true, gen_rating(user2))
+    end
+
 end
