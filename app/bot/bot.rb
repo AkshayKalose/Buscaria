@@ -25,60 +25,8 @@ Bot.on :message do |message|
   # FIRST CHECK IF WE ARE ROUTING. HANDLE IF NOT ROUTING
 
   if user.talking_to == nil || user.talking_to == 0
-	case message.text
-	when /help/i
-	message.reply(
-	  attachment: {
-	    type: 'template',
-	    payload: {
-	      template_type: 'button',
-	      text: 'Welcome to Buscaria! We connect people who want to learn a new language to real people who want to help them. Would you like to learn or teach?',
-	      buttons: [
-	        { type: 'postback', title: 'Learn!', payload: 'LANGUAGE_LEARN' },
-	        { type: 'postback', title: 'Teach!', payload: 'LANGUAGE_TEACH' }
-	      ]
-	    }
-	  }
-	)
-	when /\/practice ([a-zA-Z]*) (\d*)/i
-
-	 # Check if anyone can help in database
-
-	 # if
-
-	message.reply(
-	  text: 'Great! Let\'s get started with ' + $1 + ' at level ' + $2
-	)
-
-	 # else
-
-	message.reply(
-	  text: 'Sorry, there is no one available to teach you ' + $1 + 'at level ' + $2
-	)
-
-	# message.reply(
-	#   attachment: {
-	#     type: 'image',
-	#     payload: {
-	#       url: 'https://i.imgur.com/iMKrDQc.gif'
-	#     }
-	#   }
-	# )
-
-	# message.reply(
-	#   attachment: {
-	#     type: 'template',
-	#     payload: {
-	#       template_type: 'button',
-	#       text: 'Did human like it?',
-	#       buttons: [
-	#         { type: 'postback', title: 'Yes', payload: 'HUMAN_LIKED' },
-	#         { type: 'postback', title: 'No', payload: 'HUMAN_DISLIKED' }
-	#       ]
-	#     }
-	#   }
-	# )
-	end
+    rep = Command.execute(message.text, user).msg
+    message.reply(msg)
   else
   	# Route!!
   	# message.sender_id
