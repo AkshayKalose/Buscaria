@@ -1,4 +1,3 @@
-
 class Reply
   def initialize(success, msg)
     @success = success
@@ -92,11 +91,7 @@ class Learn < Command
 
         lang = Language.where(name:m[1]).first
         if lang == nil
-<<<<<<< HEAD
           return Reply.new(false, text: "Alas, Buscaría cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\"")
-=======
-          return Reply.new(false, text: "Alas, Buscaria cannot find the language you requested. Perhaps no one has signed up to teach it, or maybe you spelled it wrong. Try different forms of the language (e.g. \"Espanol\" instead of \"Spanish\").")
->>>>>>> d88eb29a30df7b1300e2a8adc34ce11bda0353b1
         end
 
         users = User.joins(:teachables)
