@@ -108,6 +108,8 @@ Bot.on :message do |message|
 		  message: reply,
 		}, access_token: ENV['ACCESS_TOKEN'])
   	else
+      # Check if there is an attachment
+  	  if message.attachments == nil
 	  	Bot.deliver({
 		  recipient: {
 		    id: user2.id_fb
@@ -116,6 +118,19 @@ Bot.on :message do |message|
 		  	text: message.text
 		  }
 		}, access_token: ENV['ACCESS_TOKEN'])
+	  else
+	  	# Do nothing
+	  	attachment = message.attachments[0]
+	  	puts("Found attachment: " + attachment["type"])
+	  	Bot.deliver({
+		  recipient: {
+		    id: user2.id_fb
+		  },
+		  message: {
+		  	attachment: attachment
+		  }
+		}, access_token: ENV['ACCESS_TOKEN'])
+	  end
   	end
   end
 end
