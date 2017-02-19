@@ -1,16 +1,18 @@
 # ¡Buscaría!
 ---
+It's as easy as ¡uno, dos, tres!
+
 ## Get Started
 
 Chat 'help' at [¡Buscaría!](https://www.messenger.com/t/buscaria)
 
 ## Inspiration
 
-Learning a language is hard, and keeping up language skills is nearly as hard. Sometimes work gets in the way, and at other times there just isn?t anyone else around that knows the language. That?s where ¡Buscaría! can help! By connecting people who want to learn a language to those who are willing to teach others through messenger, we help people maintain and develop language skills in a convenient and interpersonal way.
+Learning a language is hard, and keeping up language skills is nearly as hard. Sometimes work gets in the way, and at other times there just isn't anyone else around that knows the language. That's where ¡Buscaría! can help! By connecting people who want to learn a language to those who are willing to teach others through messenger, we help people maintain and develop language skills in a convenient and interpersonal way.
 
 ## What it does
 
-¡Buscaría! determines the languages that a person is willing to teach and wants to learn, recording the proficiency of the user at each language. Next, the user who wishes to learn a language is anonymously connected to another user who wishes to teach the language and has a greater proficiency in the language. After conversing for some time, either user can choose to end the interaction, at which point both users have the opportunity to rate the interaction. We keep track of a user?s ?karma points? to make sure that there are no free riders--learn too many times without teaching anyone else, and you?ll find yourself out of karma! Users can also gain karma through positive ratings. 
+¡Buscaría! determines the languages that a person is willing to teach and wants to learn, recording the proficiency of the user at each language. Next, the user who wishes to learn a language is anonymously connected to another user who wishes to teach the language and has a greater proficiency in the language. After conversing for some time, either user can choose to end the interaction, at which point both users have the opportunity to rate the interaction. We keep track of a user's 'karma points' to make sure that there are no free riders--learn too many times without teaching anyone else, and you'll find yourself out of karma! Users can also gain karma through positive ratings. 
 
 ## How we built it
 
