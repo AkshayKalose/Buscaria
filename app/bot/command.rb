@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Reply
   def initialize(success, msg)
     @success = success
@@ -68,7 +69,28 @@ class Help < Command
   end
 
   def self.execute(args, user)
-    Reply.new(true, text: "Welcome to Buscaría! We connect people who want to learn a new language to real people who want to help them. If you would like to learn, text \"learn <language> <proficiency>\", where proficiency is a value from 1 (know nothing) to 5 (native speaker). Buscaría will connect you with someone who is willing to teach. If you would like to teach, text \"teach <language> <proficiency>\", and Buscaría will contact you when someone asks to learn. Type \"help\" to see this message again. Type \"karma\" to list your karma points. Have fun!")
+    Reply.new(true, text: "Welcome to Buscaría! We connect people who want to learn a new language to real people who want to help them. If you would like to learn, text \"learn <language> <proficiency>\", where proficiency is a value from 1 (know nothing) to 5 (native speaker). Buscaría will connect you with someone who is willing to teach. If you would like to teach, text \"teach <language> <proficiency>\", and Buscaría will contact you when someone asks to learn. Type \"help\" to see this message again. Type \"karma\" to list your karma points. Lastly, type \"list\" to list all the avaliable languages. Have fun!")
+  end
+end
+
+class List < Command
+
+  def self.modes
+    [:main]
+  end
+
+  def self.string
+    "list"
+  end
+
+  def self.execute(args, user)
+    msg = "The languages you can learn are: "
+    langs = Language.select(:name)
+    langs.each do |l|
+      msg += l.name + ", "
+    end
+    msg = msg.chomp(", ") + "."
+    Reply.new(true, text: msg)
   end
 end
 
