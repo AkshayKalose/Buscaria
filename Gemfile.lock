@@ -110,6 +110,9 @@ GEM
       mustermann (= 0.4.0)
     nokogiri (1.6.8.1)
       mini_portile2 (~> 2.1.0)
+    passenger (5.1.2)
+      rack
+      rake (>= 0.8.1)
     rack (1.6.4)
     rack-accept (0.4.5)
       rack (>= 0.4)
@@ -196,6 +199,7 @@ DEPENDENCIES
   hashie-forbidden_attributes
   jbuilder (~> 2.0)
   jquery-rails
+  passenger
   rails (= 4.2.5)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
