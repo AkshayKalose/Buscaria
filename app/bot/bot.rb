@@ -87,17 +87,17 @@ Bot.on :message do |message|
   	when /\/exit/i
   		# Disconnect both
   		reply = {
-  			type: 'template',
-  			payload: {
-  				template_type: 'button',
-  				text: 'Your session has ended. How many karma points do you want to give your parter?',
-  				button: [
-  					{ type: 'postback', title: '1', payload: 'RATE_1_' + String(user2.id)},
-  					{ type: 'postback', title: '2', payload: 'RATE_2_' + String(user2.id)},
-  					{ type: 'postback', title: '3', payload: 'RATE_3_' + String(user2.id)},
-  					{ type: 'postback', title: '4', payload: 'RATE_4_' + String(user2.id)},
-  					{ type: 'postback', title: '5', payload: 'RATE_5_' + String(user2.id)}
-  				]
+  			attachment:{
+	  			type: 'template',
+	  			payload: {
+	  				template_type: 'button',
+	  				text: 'Your session has ended. How many karma points do you want to give your parter?',
+	  				buttons: [
+	  					{ type: 'postback', title: '1', payload: 'RATE_1_' + String(user2.id)},
+	  					{ type: 'postback', title: '2', payload: 'RATE_2_' + String(user2.id)},
+	  					{ type: 'postback', title: '3', payload: 'RATE_3_' + String(user2.id)}
+	  				]
+	  			}
   			}
   		}
   		message.reply(reply)
@@ -126,6 +126,8 @@ Bot.on :postback do |postback|
     text = 'What language would you like to learn? Type \'\\learn \', then the name of the language'
   when 'LANGUAGE_TEACH'
     text = 'What language would you like to teach? Type \'\\teach \', then the name of the language'
+  else
+  	text = 'Unhandled postback'
   end
 
   postback.reply(
