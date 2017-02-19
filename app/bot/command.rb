@@ -172,7 +172,7 @@ class Exit < Command
     "exit"
   end
 
-  def gen_rating(user)
+  def self.gen_rating(user)
     reply = {
       attachment:{
         type: 'template',
