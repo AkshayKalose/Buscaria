@@ -1,6 +1,6 @@
 # ¡Buscaría!
 ---
-It's as easy as ¡uno, dos, tres!
+It's as easy as ¡uno, dos, tres! ¡Buscaría! was created by Michael Arcidiacono, Akshay Kalose, Vishnu Sarukkai, and Michael Svolos at Treehacks 2017. [Project on DevPost](https://devpost.com/software/buscaria)
 
 ## Logo
 
