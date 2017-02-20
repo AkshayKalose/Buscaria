@@ -8,7 +8,7 @@ It's as easy as ¡uno, dos, tres!
 
 ## Screenshots
 
-![Video Chat](./screenshots/screenshot-1.png)
+![Video Chat](./screenshots/screenshot.png)
 
 ![Session Flow](./screenshots/screenshot-2.png)
 
